@@ -3,7 +3,7 @@ A C# program that manipulates a given pictures' Hash value forcibly modifying it
 maintaining close to initial picture visibility.
 
 # DISCLAIMER
-This is for created for educational and informational purposes only.
+This is created for educational and informational purposes only.
 
 # Installation, Set up & Usage
 ## Pre-Requisites
