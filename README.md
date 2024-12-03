@@ -1,5 +1,5 @@
 # Image Hasher
-A C# program that manipulates a given pictures' Hash value forcibly modifying its hash value while
+A C# program that manipulates a given pictures' Hash value forcibly modifying it while
 maintaining close to initial picture visibility.
 
 # DISCLAIMER
@@ -28,10 +28,10 @@ dotnet build -c Release
 ```
 4. Make the file executable on Linux
 ````
-chmod +x bin/Release/net8.0/linux-x64/publish/ImageHashSpoof
+chmod +x bin/Release/net8.0/linux-x64/publish/ImageHash
 ````
 ```` Create symbolic link
-ln -s bin/Release/net8.0/linux-x64/publish/ImageHashSpoofer spoof
+ln -s bin/Release/net8.0/linux-x64/publish/ImageHash spoof
 ````
 ## Run
 ```./spoof hexString image.png```
