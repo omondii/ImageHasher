@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageHash", "ImageHash.csproj", "{FC9B71AA-C897-48B5-A01A-E2753EFACF28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{0D217D68-3F6E-453C-AC50-28B8D184BFDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +15,9 @@ Global
 		{FC9B71AA-C897-48B5-A01A-E2753EFACF28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC9B71AA-C897-48B5-A01A-E2753EFACF28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC9B71AA-C897-48B5-A01A-E2753EFACF28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D217D68-3F6E-453C-AC50-28B8D184BFDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D217D68-3F6E-453C-AC50-28B8D184BFDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D217D68-3F6E-453C-AC50-28B8D184BFDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D217D68-3F6E-453C-AC50-28B8D184BFDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

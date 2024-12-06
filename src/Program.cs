@@ -19,9 +19,9 @@ class Program
 
         string hexString = args[0];
         string imagePath = args[1];
-        string altName = args[2];
+        string newFile = args[2];
 
-        hexString = HexValidator(hexString);
+        hexString = ImageProcessor.HexValidator(hexString);
         // Console.WriteLine(hexString);
 
         if (!File.Exists(imagePath))
@@ -32,7 +32,7 @@ class Program
         try
         {
             using var modifyImage = ImageProcessor.ImageModifier(imagePath, hexString);
-            using (var stream = new FileStream(altName, FileMode.Create))
+            using (var stream = new FileStream(newFile, FileMode.Create))
             {
                 modifyImage.Save(stream, new SixLabors.ImageSharp.Formats.Png.PngEncoder());
             }
@@ -41,21 +41,5 @@ class Program
         {
             Console.WriteLine($"Error: {e.Message}");
         }
-    }
-
-    private static string HexValidator(string hexString)
-    /*
-     * Hex string validator using Regex
-     * @hexString: argument string taken, should be a valid hexadecimal number
-     */
-    {
-        string pattern = @"^(0x)?[0-9a-fA-F]+$";
-
-        while (!Regex.IsMatch(hexString, pattern))
-        {
-            Console.Write("Invalid hex string: ");
-            hexString = Console.ReadLine();
-        }
-        return hexString.Replace("0x", "").ToLower();
     }
 }
