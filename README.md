@@ -3,10 +3,10 @@ A C# program that manipulates a given pictures' Hash value forcibly modifying it
 maintaining close to initial picture visibility.
 ImageSharp framework for code-image usability.
 ## Tools
-.NET8
-C#
-ImageSharp
-
+.NET8  
+C#  
+ImageSharp  
+Xunit  
 
 # DISCLAIMER
 This is created for educational and informational purposes only.

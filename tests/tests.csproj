@@ -26,5 +26,11 @@
   <ItemGroup>
     <ProjectReference Include="..\ImageHash.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

@@ -7,20 +7,20 @@ namespace ImageHash;
 
 public class ImageProcessor
 {
-    public static string HexValidator(string hexString)
-        /*
-         * Hex string validator using Regex
-         * @hexString: argument string taken, should be a valid hexadecimal number
-         */
+    public static string HexValidator(string? hexString)
+    /*
+     * Hex string validator using Regex
+     * @hexString: argument string taken, should be a valid hexadecimal number
+     */
     {
         string pattern = @"^(0x)?[0-9a-fA-F]+$";
 
-        while (!Regex.IsMatch(hexString, pattern))
+        while (!string.IsNullOrEmpty(hexString) && !Regex.IsMatch(hexString, pattern))
         {
-            Console.Write("Invalid hex string: ");
+            Console.Write("Invalid hex string:");
             hexString = Console.ReadLine();
         }
-        return hexString.Replace("0x", "").ToLower();
+        return hexString?.Replace("0x", "").ToLower() ?? string.Empty;
     }
     
     public static Image<Rgba32> ImageModifier(string imagePath, string hexString)
@@ -35,6 +35,7 @@ public class ImageProcessor
         // Load & make changes to the image using e ImageSharp library. 
         using var originalImage = Image.Load<Rgba32>(imagePath);
         var workingImage = originalImage.Clone();
+        //var count = 0; // A counter for each wrong hashValue tests
 
         var random = new Random();
         int maxAttempts = 1_000_000; // Total attempts 1M to prevent an infinite loop
@@ -65,6 +66,7 @@ public class ImageProcessor
                 return modImage;
             }
             workingImage = modImage;
+            //count++;
         }
         throw new Exception("Unable to produce a matching hexstring");
     }

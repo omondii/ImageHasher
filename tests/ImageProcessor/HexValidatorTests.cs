@@ -9,6 +9,7 @@ public class HexValidatorTest
     public HexValidatorTest()
     /*
      * HexValidator: Test suit for: ImageProcessor. HexValidator
+     * SUT: ImageProcessor Class
      */
     {
         _input = Console.In;
@@ -22,8 +23,8 @@ public class HexValidatorTest
     [InlineData("0xdead")]
     public void TestValidHexString(string hexString)
     /*
-     * TestValidHexString: Tests if a valid hexstring is passed by user
-     * @hexString: Must be a hexadecimal equivalent string with/without 0x
+     * TestValidHexString: Tests if a function receives an Invalid string
+     * @hexString: Must be a hexadecimal equivalent string. 0x must be optional
      */
     {
         // Remove "0x" if present
@@ -38,7 +39,7 @@ public class HexValidatorTest
 
     [Theory]
     [InlineData("0x20re")]
-    [InlineData("0xTream")]
+    [InlineData("0xTeam")]
     [InlineData("4040HG")]
     public void TestInvalidHexString(string hexString)
     /*

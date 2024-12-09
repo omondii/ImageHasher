@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace ImageHash;
+﻿namespace ImageHash;
 
 class Program
 {
