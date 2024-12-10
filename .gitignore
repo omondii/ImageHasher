@@ -8,7 +8,7 @@ struct.txt
 *.png
 
 # Problematic  test classes
-ImageModifierTests.cs
+#ImageModifierTests.cs
 
 docs
 .fake
