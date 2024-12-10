@@ -19,19 +19,16 @@ class Program
         string hexString = args[0];
         string imagePath = args[1];
         string newFile = args[2];
-
-        hexString = ImageProcessor.HexValidator(hexString);
-        // Console.WriteLine(hexString);
-
+        
         if (!File.Exists(imagePath))
         {
             Console.WriteLine("Image File Not Found");
         }
         
-        if (!File.Exists(newFile))
-        {
-            Console.WriteLine("Please provide a name to save the new Image");
-        }
+        // Validate user Input
+        hexString = ImageProcessor.HexValidator(hexString);
+        // imagePath = ImageProcessor.IsPng(imagePath);
+        // newFile = ImageProcessor.IsPng(newFile);
 
         try
         {
@@ -39,6 +36,7 @@ class Program
             using var modifiedImage = ImageProcessor.ImageModifier(imagePath, hexString);
             using var stream = new FileStream(newFile, FileMode.Create);
             modifiedImage.Save(stream, new SixLabors.ImageSharp.Formats.Png.PngEncoder()); // Save .png Image using use provided name 
+            Console.WriteLine("Done");
         }
         catch (Exception e)
         {

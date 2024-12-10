@@ -6,23 +6,7 @@ using SixLabors.ImageSharp.PixelFormats;
 namespace ImageHash;
 
 public class ImageProcessor
-{
-    public static string HexValidator(string? hexString)
-    /*
-     * Hex string validator using Regex
-     * @hexString: argument string taken, should be a valid hexadecimal number
-     */
-    {
-        string pattern = @"^(0x)?[0-9a-fA-F]+$";
-
-        while (!string.IsNullOrEmpty(hexString) && !Regex.IsMatch(hexString, pattern))
-        {
-            Console.Write("Invalid hex string:");
-            hexString = Console.ReadLine();
-        }
-        return hexString?.Replace("0x", "").ToLower() ?? string.Empty;
-    }
-    
+{ 
     public static Image<Rgba32> ImageModifier(string imagePath, string hexString)
     /*
      * ImageModifier: Takes input Image and modifies it such that it's hash value starts
@@ -39,9 +23,9 @@ public class ImageProcessor
 
         var random = new Random();
         int maxAttempts = 1_000_000; // Total attempts 1M to prevent an infinite loop
-                                     // while giving the prog enough attempt chances
+                                     // while giving the prog enough attempt chances to match hexstring
 
-        for (int attempts = 0; attempts < maxAttempts; attempts++)
+        for (int attempt = 0; attempt <= maxAttempts; attempt++)
         {
             var modImage = workingImage.Clone(); // Create a clone of the image for each attempt
             // Randomly pick a pixel coordinate to modify, then replace in the modification image
@@ -64,9 +48,13 @@ public class ImageProcessor
             var hash = ImageHasher(modImage);
             if (hash.StartsWith(hexString)) // part of prog that makes it slow
             {
-                Console.WriteLine(count);
+                // Console.WriteLine(count);
                 return modImage;
-            }
+            } 
+            // if (attempts % 1000 == 0)
+            // {
+            //     Console.WriteLine($"Attempt {attempts} of {maxAttempts}.");
+            // }
             workingImage = modImage;
             count++;
         }
@@ -82,13 +70,39 @@ public class ImageProcessor
     {
         using var memoryStream = new MemoryStream();
         image.Save(memoryStream, new SixLabors.ImageSharp.Formats.Png.PngEncoder()); // save the hashedImage into memory, support for png Image type 
-        using var sha = SHA512.Create();
+        using var sha = SHA512.Create(); // hash value is generated using the Sha512 algo
         var hashBytes = sha.ComputeHash(memoryStream.ToArray());
         return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
     }
     
-    // public static string ImageFormatValidator(string imagePath)
+    public static string HexValidator(string? hexString)
+    /*
+     * Hex string validator using Regex
+     * @hexString: argument string taken, should be a valid hexadecimal number
+     */
+    {
+        string pattern = @"^(0x)?[0-9a-fA-F]+$";
+
+        while (!string.IsNullOrEmpty(hexString) && !Regex.IsMatch(hexString, pattern))
+        {
+            Console.Write("Invalid hex string:");
+            hexString = Console.ReadLine();
+        }
+        return hexString?.Replace("0x", "").ToLower() ?? string.Empty;
+    }
+
+    // public static string IsPng(string imageName)
+    // /*
+    //  * IsPng: Checks if image and new image name passed are of type png
+    //  * @imageName: a string path to an image
+    //  * Returns: the path name if it's a valid .png string
+    //  */
     // {
-    //     
+    //     while (!Path.GetExtension(imageName).Equals("png", StringComparison.OrdinalIgnoreCase))
+    //     {
+    //         Console.WriteLine("Provide a .png file");
+    //         imageName = Console.ReadLine();
+    //     }
+    //     return imageName ?? string.Empty;
     // }
 }
