@@ -4,9 +4,10 @@ class Program
 {
     static void Main(string[] args)
     /*
-     * Main takes in 2 arguments
+     * Program entry point. Takes 3 arguments
      * @hexString: A string off type Hexadecimal
-     * @imagePath: path to an image file
+     * @imagePath: path to an image file(original Image)
+     * @newFile: name to save the altered image with
      */
     {
         if (args.Length != 3)
@@ -26,14 +27,18 @@ class Program
         {
             Console.WriteLine("Image File Not Found");
         }
+        
+        if (!File.Exists(newFile))
+        {
+            Console.WriteLine("Please provide a name to save the new Image");
+        }
 
         try
         {
-            using var modifyImage = ImageProcessor.ImageModifier(imagePath, hexString);
-            using (var stream = new FileStream(newFile, FileMode.Create))
-            {
-                modifyImage.Save(stream, new SixLabors.ImageSharp.Formats.Png.PngEncoder());
-            }
+            // Use provided args to modify & get a hash value using the ImageProcessor class
+            using var modifiedImage = ImageProcessor.ImageModifier(imagePath, hexString);
+            using var stream = new FileStream(newFile, FileMode.Create);
+            modifiedImage.Save(stream, new SixLabors.ImageSharp.Formats.Png.PngEncoder()); // Save .png Image using use provided name 
         }
         catch (Exception e)
         {

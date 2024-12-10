@@ -35,10 +35,11 @@ public class ImageProcessor
         // Load & make changes to the image using e ImageSharp library. 
         using var originalImage = Image.Load<Rgba32>(imagePath);
         var workingImage = originalImage.Clone();
-        //var count = 0; // A counter for each wrong hashValue tests
+        var count = 0; // A counter for each wrong hashValue tests
 
         var random = new Random();
         int maxAttempts = 1_000_000; // Total attempts 1M to prevent an infinite loop
+                                     // while giving the prog enough attempt chances
 
         for (int attempts = 0; attempts < maxAttempts; attempts++)
         {
@@ -61,12 +62,13 @@ public class ImageProcessor
              If it matches return the modified image, if not make this image the new working image 
             */
             var hash = ImageHasher(modImage);
-            if (hash.StartsWith(hexString))
+            if (hash.StartsWith(hexString)) // part of prog that makes it slow
             {
+                Console.WriteLine(count);
                 return modImage;
             }
             workingImage = modImage;
-            //count++;
+            count++;
         }
         throw new Exception("Unable to produce a matching hexstring");
     }
@@ -84,31 +86,9 @@ public class ImageProcessor
         var hashBytes = sha.ComputeHash(memoryStream.ToArray());
         return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
     }
-
-    // private static bool HashValidator(string hashString, string hexString)
-    //     /*
-    //      * HashValidator: Check if the given hash starts with the hexstring
-    //      * @hashString: (string) a generated hashstring, 1st 3 xters or 4 should be similar to hexstring
-    //      * @hexString: (string) User provided hexadecimal string
-    //      * Returns true or false
-    //      */
+    
+    // public static string ImageFormatValidator(string imagePath)
     // {
-    //     // int matchLength = Math.Min(hexString.Length, hashString.Length);
-    //
-    //     return hashString.StartsWith(hexString);
-    // }
-    // {
-    //     string pattern = hexString.Length >= 3 ? hexString:
-    //         hexString.Length == 2 ? hexString : hexString;
-    //
-    //     int matchingXters = 0;
-    //     for (int i = 0; i < Math.Min(pattern.Length, hashString.Length); i++)
-    //     {
-    //         if (hashString[i] == pattern[i])
-    //             matchingXters++;
-    //         else
-    //             break;
-    //     }
-    //     return matchingXters >= (hexString.Length == 1 ? 1 : 2);
+    //     
     // }
 }
