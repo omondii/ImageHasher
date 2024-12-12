@@ -1,16 +1,16 @@
 namespace ImageHash.Tests;
 
 public class HexValidatorTest
+/*
+ * HexValidator: Test suit for: ImageProcessor. HexValidator
+ * SUT: ImageProcessor Class
+ */
 {
-    // DI for Console mocking for our tests
+    // DI for Console mocking for our testclass
     private readonly TextReader _input;
     private readonly TextWriter _output;
 
     public HexValidatorTest()
-    /*
-     * HexValidator: Test suit for: ImageProcessor. HexValidator
-     * SUT: ImageProcessor Class
-     */
     {
         _input = Console.In;
         _output = Console.Out;

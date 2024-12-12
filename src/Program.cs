@@ -19,8 +19,10 @@ class Program
         string imagePath = args[1];
         string newFile = args[2];
 
+        // Input validation
         hexString = ImageProcessor.HexValidator(hexString);
-        // Console.WriteLine(hexString);
+        imagePath = ImageProcessor.FileTypeValidator(imagePath);
+        newFile = ImageProcessor.FileTypeValidator(newFile);
 
         if (!File.Exists(imagePath))
         {
@@ -29,11 +31,10 @@ class Program
 
         try
         {
-            using var modifyImage = ImageProcessor.ImageModifier(imagePath, hexString);
-            using (var stream = new FileStream(newFile, FileMode.Create))
-            {
-                modifyImage.Save(stream, new SixLabors.ImageSharp.Formats.Png.PngEncoder());
-            }
+            using var modifiedImage = ImageProcessor.ImageModifier(imagePath, hexString);
+            using var fs = new FileStream(newFile, FileMode.Create);
+            modifiedImage.Save(fs, new SixLabors.ImageSharp.Formats.Png.PngEncoder());
+            Console.WriteLine($"Image Saved as {newFile}");
         }
         catch (Exception e)
         {

@@ -4,12 +4,15 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 struct.txt
+*.txt
 # test images
 *.png
 
 # Problematic  test classes
 ImageModifierTests.cs
 
+# emacs files
+*'#
 docs
 .fake
 [Oo]bj/
