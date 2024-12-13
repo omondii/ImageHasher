@@ -4,9 +4,10 @@ class Program
 {
     static void Main(string[] args)
     /*
-     * Main takes in 2 arguments
-     * @hexString: A string off type Hexadecimal
-     * @imagePath: path to an image file
+     * Main takes in 3 arguments
+     * @hexString: A string off type Hexadecimal.
+     * @imagePath: path to an image file.
+     * @newFile: path to save the modified image to.
      */
     {
         if (args.Length != 3)
@@ -24,21 +25,25 @@ class Program
         imagePath = ImageProcessor.FileTypeValidator(imagePath);
         newFile = ImageProcessor.FileTypeValidator(newFile);
 
-        if (!File.Exists(imagePath))
-        {
-            Console.WriteLine("Image File Not Found");
-        }
+        // if (!File.Exists(imagePath) )
+        // {
+        //     Console.WriteLine("Image File Not Found");
+        // }
 
         try
         {
+            /* Application entry point.
+             Pass the provided Image to the processor func together with the hexstring to prefix the hash value
+             Save the modified Image to the provided location with the provided name
+             */
             using var modifiedImage = ImageProcessor.ImageModifier(imagePath, hexString);
             using var fs = new FileStream(newFile, FileMode.Create);
             modifiedImage.Save(fs, new SixLabors.ImageSharp.Formats.Png.PngEncoder());
             Console.WriteLine($"Image Saved as {newFile}");
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Console.WriteLine($"Error: {e.Message}");
+            Console.WriteLine($"Operation Unsuccessful");
         }
     }
 }

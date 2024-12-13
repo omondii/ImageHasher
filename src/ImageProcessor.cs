@@ -16,24 +16,32 @@ public class ImageProcessor
      * Returns: a slightly modified image
      */
     {
-        // Load & make changes to the image using e ImageSharp library.
+        /* Load & make changes to the image using e ImageSharp library.
+         ImageSharp stores pixel data in a contiguous memory buffer that allows for 2D
+         coordinate access and manipulation. */
         using var originalImage = Image.Load<Rgba32>(imagePath);
         var workingImage = originalImage.Clone();
-        //var count = 0; // A counter for each wrong hashValue tests
+        //var count = 0; // A counter for each wrong hashValue (tests)
 
         var random = new Random();
         int maxAttempts = 1_000_000; // Total attempts 1M to prevent an infinite loop
+                                     // while giving the prog enough iterations for complex hexstrings
 
         for (int attempts = 0; attempts < maxAttempts; attempts++)
         {
             var modImage = workingImage.Clone(); // Create a clone of the image for each attempt
-            // Randomly pick a pixel coordinate to modify, then replace in the modification image
+            
+            /*Randomly pick a pixel coordinate to modify
+             Then, retrieve the specific pixel at the coordinate from image for modification.
+             */ 
             int x = random.Next(modImage.Width);
             int y = random.Next(modImage.Height);
             var pixel = modImage[x, y];
 
-            /* Slightly modify the image by removing/adding -1/1 to each pixel
-             Eg: If red is 100 it will be 99 or 101
+            /* Randomly modify each pixel color channel at the coordinate by 1/-1 while ensuring the values
+             remain between 0-255. 
+             Color channels in a pixel are: Red, Green, Blue & Alpha
+             Then, replace the modified pixel in the modImage.
             */
             pixel.R = (byte)Math.Clamp(pixel.R + (random.Next(2) * 2 - 1), 0, 255);
             pixel.G = (byte)Math.Clamp(pixel.G + (random.Next(2) * 2 - 1), 0, 255);
@@ -42,7 +50,8 @@ public class ImageProcessor
             modImage[x, y] = pixel;
 
             /* generate the images hash value and check if it starts with hexstring
-             If it matches return the modified image, if not make this image the new working image 
+             If it matches return the modified image, if not make this image the new working image
+             and repeat the image modification & hash generation process.
             */
             var hash = ImageHasher(modImage);
             if (hash.StartsWith(hexString))
@@ -56,11 +65,11 @@ public class ImageProcessor
     }
 
     private static string ImageHasher(Image<Rgba32> image)
-        /*
-         * ImageHasher: computes a hash value from an image
-         * @image: (Image)a slightly altered image that will be assigned a custom hash value
-         * Returns: a (string)a sha512 hash value
-         */
+    /*
+     * ImageHasher: computes a hash value from an image using the sha512 algo.
+     * @image: (Image)a slightly altered image that will be assigned a custom hash value
+     * Returns: (string)a normalized sha512 hash value
+     */
     {
         using var memoryStream = new MemoryStream();
         image.Save(memoryStream, new SixLabors.ImageSharp.Formats.Png.PngEncoder()); // save the hashedImage into memory, support for png Image type 
@@ -70,12 +79,13 @@ public class ImageProcessor
     }
 
     public static string HexValidator(string? hexString)
-        /*
-         * HexValidator: Validates entered string to ensure its a hexadecimal equivalent
-         * @hexString: argument string taken, should be a valid hexadecimal number
-         * Returns: A valid normalized hexstring.
-         */
+    /*
+     * HexValidator: Validates entered string to ensure it's a hexadecimal equivalent
+     * @hexString: a hexadecimal string.
+     * Returns: A valid normalized hexstring.
+     */
     {
+        // Regex pattern representing a valid hexadecimal composition.
         string pattern = @"^(0x)?[0-9a-fA-F]+$";
 
         while (!string.IsNullOrEmpty(hexString) && !Regex.IsMatch(hexString, pattern))
@@ -88,7 +98,7 @@ public class ImageProcessor
 
     public static string FileTypeValidator(string? fileName)
     /*
-      * IsPng: Checks if image and new image name passed are of type png
+      * FileTypeValidator: Checks if image and new image name passed are of type png
       * @imageName: a string path to an image
       * Returns: the path name if it's a valid .png string
       */

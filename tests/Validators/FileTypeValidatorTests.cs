@@ -16,6 +16,10 @@ public class FileTypeValidatorTests
     [InlineData("image1.png")]
     [InlineData("2.png")]
     public void TestValidImageFormat(string filename)
+    /*
+     * TestValidImageFormat: Check the response when the validator func receives a valid image type
+     * @fileName: valid path name to validate
+     */
     {
         // Act
         string validName = ImageProcessor.FileTypeValidator(filename);
@@ -29,6 +33,10 @@ public class FileTypeValidatorTests
     [InlineData("image2.jpg")]
     [InlineData("image3.xml")]
     public void TestInvalidImageFormat(string filename)
+    /*
+     * TestInvalidImageFormat: Check function behaviour when it receives an invalid image type
+     * @fileName: Invalid path name to validate
+     */
     {
         var writer = new StringWriter();
         var reader = new StringReader("image.png");
@@ -63,6 +71,10 @@ public class FileTypeValidatorTests
     [InlineData("image")]
     [InlineData("76")]
     public void TestMissingImageFormatExtension(string filename)
+    /*
+     * TestInvalidImageFormat: Check function behaviour when it receives no image type
+     * @fileName: path name with no extension to validate
+     */
     {
         var writer = new StringWriter();
         var reader = new StringReader("image.png");
