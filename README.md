@@ -19,7 +19,7 @@ Xunit
 ```Clone this repository
 git clone https://github.com/omondii/ImageHasher
 ```
-2. Navigate to the main project directory\
+2. Navigate to the main project directory
 ```
 cd ImageHash
 ```
@@ -33,11 +33,11 @@ dotnet build -c Release
 ```
 5. Make the file executable on Linux
 ````
-chmod +x bin/Release/net8.0/linux-x64/publish/ImageHash
+chmod +x bin/Release/net8.0/linux-x64/publish/ImageHasher
 ````
 6. Create a symbolic link on a linux OS, program name
 ```` Create symbolic link
-ln -s bin/Release/net8.0/linux-x64/publish/ImageHash spoof
+ln -s bin/Release/net8.0/linux-x64/publish/ImageHasher spoof
 ````
 
 ## Usage
